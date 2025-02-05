@@ -38,37 +38,35 @@
           </div>
           <div class="card-cuerpo">
             <div class="profile-info">
-              <img :src="alumno.alumno.imagen" />
+              <img :src="alumno.alumno.imagen" @error="defaultImage"/>
               <div class="user-details">
                 <div class="titulo" style="font-weight: 600">
                   {{ alumno.alumno.usuario }}
                 </div>
                 <div class="user-curso subtitulo" style="font-size: 13px">
-                  {{ alumno.alumno.email }} 
-                  <span class="badge bg-info text-dark">
-                    {{alumno.charlasTotales}}
-                    </span>           
-                  <span class="badge bg-danger">
-                    {{alumno.charlasPropuestas}}
-                    </span>  
-                  <span class="badge bg-success">
-                    {{alumno.charlasAceptadas}}
-                    </span>                 
+                  <div class="user-mail">{{ alumno.alumno.email }} </div>
+                    <div class="card-charlasalumno">
+                      <div id="totales-charlasalumno" class="stats-wrapper-charlasalumno">
+                        <p class="heading-charlasalumno">Totales:</p>
+                        <div class="bottom-wrapper-charlasalumno">
+                          <p class="count-charlasalumno">{{ alumno.charlasTotales }}</p>
+                        </div>
+                      </div>
+                      <div id="propuestas-charlasalumno" class="stats-wrapper-charlasalumno">
+                        <p class="heading-charlasalumno">Propuestas:</p>
+                        <div class="bottom-wrapper-charlasalumno">
+                          <p class="count-charlasalumno">{{ alumno.charlasPropuestas }}</p>
+                        </div>
+                      </div>
+                      <div id="aceptadas-charlasalumno" class="stats-wrapper-charlasalumno">
+                        <p class="heading-charlasalumno">Aceptada:</p>
+                        <div class="bottom-wrapper-charlasalumno">
+                          <p class="count-charlasalumno">{{ alumno.charlasAceptadas }}</p>
+                        </div>
+                      </div>
+                    </div>     
                 </div>
               </div>
-            </div>
-            <div class="btn-group">
-              <!-- Solo mostrar el botón si el curso está activo -->
-              <button
-                @click="abrirAlerta(alumno.alumno)"
-                v-text="alumno.alumno.estadoUsuario ? 'Desactivar' : 'Activar'"
-                :style="{
-                  backgroundColor: alumno.alumno.estadoUsuario
-                    ? '#ff4d4f'
-                    : '#4CAF50',
-                  color: 'white',
-                }"
-              ></button>
             </div>
           </div>
         </div>
@@ -122,6 +120,10 @@ export default {
           }
         });
       }
+    },
+
+    defaultImage(event) {
+      event.target.src = require('@/assets/perfil_prueba.png');
     },
 
     async cambiarEstadoAlumno(alumno, activar) {
@@ -400,5 +402,66 @@ export default {
   color: white !important; /* Texto blanco */
   border: none !important; /* Sin borde */
   box-shadow: none !important; /* Sin sombra */
+}
+
+.card-charlasalumno {
+  display: flex;
+  align-items: center !important; /* Centra los elementos en el eje vertical */
+  justify-content: center !important;
+  gap: 20px;
+  margin-left: 6px;
+  margin-top: 45px;
+}
+
+.stats-wrapper-charlasalumno {
+  display: flex;
+  align-items: center !important; /* Centra el contenido verticalmente */
+  justify-content: center !important; /* Centra el contenido horizontalmente */
+  width: 110px;
+  height: 30px;
+  border-radius: 20px;
+  background-color: rgb(255, 255, 255);
+  padding: 5px 10px;
+  text-align: left !important;
+  box-shadow: 2px 3px 6px rgba(21, 2, 3, 0.35);
+  margin-bottom: 0 !important;
+}
+.stats-wrapper-charlasalumno p{
+  margin-bottom: 0px !important;
+}
+
+#totales-charlasalumno {
+  background-color: #ca6ad1;
+}
+
+#propuestas-charlasalumno {
+  background-color: #815ad4;
+}
+
+#aceptadas-charlasalumno {
+  background-color: #58e19f;
+}
+
+.heading-charlasalumno {
+  font-size: 0.8em;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  display: flex;
+  align-items: center !important;
+  gap: 3px;
+  white-space: nowrap;
+}
+
+.bottom-wrapper-charlasalumno {
+  display: flex;
+  font-size: 0.8em;
+  font-weight: 700;
+  justify-content: center !important;
+}
+
+.user-mail {
+  font-weight: 500;
+  color: #585858;
+  font-size: 0.55;
 }
 </style>
