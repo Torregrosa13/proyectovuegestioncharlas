@@ -44,29 +44,34 @@
                   {{ alumno.alumno.usuario }}
                 </div>
                 <div class="user-curso subtitulo" style="font-size: 13px">
-                  <div class="user-mail">{{ alumno.alumno.email }} </div>
-                    <div class="card-charlasalumno">
-                      <div id="totales-charlasalumno" class="stats-wrapper-charlasalumno">
-                        <p class="heading-charlasalumno">Totales:</p>
-                        <div class="bottom-wrapper-charlasalumno">
-                          <p class="count-charlasalumno">{{ alumno.charlasTotales }}</p>
-                        </div>
-                      </div>
-                      <div id="propuestas-charlasalumno" class="stats-wrapper-charlasalumno">
-                        <p class="heading-charlasalumno">Propuestas:</p>
-                        <div class="bottom-wrapper-charlasalumno">
-                          <p class="count-charlasalumno">{{ alumno.charlasPropuestas }}</p>
-                        </div>
-                      </div>
-                      <div id="aceptadas-charlasalumno" class="stats-wrapper-charlasalumno">
-                        <p class="heading-charlasalumno">Aceptada:</p>
-                        <div class="bottom-wrapper-charlasalumno">
-                          <p class="count-charlasalumno">{{ alumno.charlasAceptadas }}</p>
-                        </div>
-                      </div>
-                    </div>     
+                  <div class="user-mail">{{ alumno.alumno.email }} </div>   
                 </div>
               </div>
+            </div>
+          </div>
+          <div class="card-footer">
+            <div class="card-titulo">
+              <p class="charlasalumno-tittle"><strong>Charlas</strong></p>
+            </div>
+            <div class="card-stats">
+              <div id="totales-charlasalumno" class="stats-wrapper-charlasalumno">
+              <p class="heading-charlasalumno">Totales:</p>
+              <div class="bottom-wrapper-charlasalumno">
+                <p class="count-charlasalumno">{{ alumno.charlasTotales }}</p>
+              </div>
+            </div>
+            <div id="propuestas-charlasalumno" class="stats-wrapper-charlasalumno">
+              <p class="heading-charlasalumno">Propuestas:</p>
+              <div class="bottom-wrapper-charlasalumno">
+                <p class="count-charlasalumno">{{ alumno.charlasPropuestas }}</p>
+              </div>
+            </div>
+            <div id="aceptadas-charlasalumno" class="stats-wrapper-charlasalumno">
+              <p class="heading-charlasalumno">Aceptada:</p>
+              <div class="bottom-wrapper-charlasalumno">
+                <p class="count-charlasalumno">{{ alumno.charlasAceptadas }}</p>
+              </div>
+            </div>  
             </div>
           </div>
         </div>
@@ -281,6 +286,7 @@ export default {
 }
 
 .card-usuario {
+  background-color: #f0f0f0 !important;
   width: 100%;
   max-width: 480px;
   border-radius: 15px;
@@ -291,7 +297,7 @@ export default {
 }
 
 .card-encabezado {
-  background-color: #ff7a00;
+  background-color: rgb(21 166 118) !important;
   height: 100px;
   position: relative;
 }
@@ -306,12 +312,14 @@ export default {
 }
 
 .card-cuerpo {
-  background-color: #a3a3a3;
+  background-color: #f0f0f0 !important;
   padding: 20px;
   text-align: center;
   position: relative;
   margin-top: -30px;
   z-index: 1;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
 }
 
 .profile-info {
@@ -406,62 +414,103 @@ export default {
 
 .card-charlasalumno {
   display: flex;
-  align-items: center !important; /* Centra los elementos en el eje vertical */
-  justify-content: center !important;
-  gap: 20px;
-  margin-left: 6px;
-  margin-top: 45px;
+  flex-direction: column; /* Asegura que los elementos se apilen verticalmente */
+  align-items: center !important;
+  justify-content: flex-start !important; /* Alinea los elementos al principio */
+  gap: 14px;
+  margin-top: 25px;
+  position: relative; /* Necesario para el pseudo-elemento */
+  width: 100%;
+  padding-top: 15px;
+}
+
+.card-footer {
+  background-color: #f0f0f0 !important;
+  display: flex;
+  justify-content: space-between; /* Distribuye los bloques equitativamente */
+  gap: 20px; /* Ajusta el espacio entre los bloques */
+  padding: 15px 20px;
+  width: 100%;
+  align-items: end;
+    margin-bottom: 20px;
+    margin-top: 0;
+}
+
+.card-charlasalumno {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 0;
+}
+
+.charlasalumno-tittle {
+  font-size: 0.8em;
+  font-weight: 700;
+  color: #333;
+  text-align: center;
 }
 
 .stats-wrapper-charlasalumno {
   display: flex;
-  align-items: center !important; /* Centra el contenido verticalmente */
-  justify-content: center !important; /* Centra el contenido horizontalmente */
-  width: 110px;
+  flex-direction: row;
+  align-items: center; /* Centra los elementos dentro de cada bloque */
+  justify-content: center;
+  width: 120px;
   height: 30px;
   border-radius: 20px;
   background-color: rgb(255, 255, 255);
   padding: 5px 10px;
-  text-align: left !important;
   box-shadow: 2px 3px 6px rgba(21, 2, 3, 0.35);
-  margin-bottom: 0 !important;
-}
-.stats-wrapper-charlasalumno p{
-  margin-bottom: 0px !important;
-}
-
-#totales-charlasalumno {
-  background-color: #ca6ad1;
-}
-
-#propuestas-charlasalumno {
-  background-color: #815ad4;
-}
-
-#aceptadas-charlasalumno {
-  background-color: #58e19f;
 }
 
 .heading-charlasalumno {
-  font-size: 0.8em;
+  font-size: 0.9em;
   font-weight: 700;
   letter-spacing: 0.3px;
-  display: flex;
-  align-items: center !important;
-  gap: 3px;
-  white-space: nowrap;
+  text-align: center;
+  margin-bottom: 0;
+  margin-top: 0;
 }
 
 .bottom-wrapper-charlasalumno {
   display: flex;
-  font-size: 0.8em;
-  font-weight: 700;
-  justify-content: center !important;
+  justify-content: center;
+  align-items: center;
+}
+
+.count-charlasalumno {
+  font-size: 0.6em;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 0;
+  margin-top: 0;
+  padding-left: 5px;
+}
+
+#totales-charlasalumno {
+  background-color: #e3b7e6;
+}
+
+#propuestas-charlasalumno {
+  background-color: #afabf4 ;
+}
+
+#aceptadas-charlasalumno {
+  background-color: #48e8b3;
 }
 
 .user-mail {
-  font-weight: 500;
-  color: #585858;
-  font-size: 0.55;
+  font-size: 0.7;
+  font-weight: 400;
+  color: #6b6b6b;
 }
+
+.card-stats {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
 </style>
