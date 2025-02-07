@@ -6,7 +6,7 @@
       <!-- Ícono de retroceder -->
     </button>
 
-    <h2 class="mb-4 text-center" style="font-size: 42px; font-weight: 400px">
+    <h2 class="mb-4 text-center" style="font-size: 42px; font-weight: 400px;">
       Gestión de Alumnos
     </h2>
     <hr class="linea-separadora" />
@@ -30,8 +30,13 @@
     <div class="row row-cols-xl-3 row-cols-lg-2 row-cols-1 d-flex">
       <div class="col" v-for="alumno in alumnos" :key="alumno.alumno.idUsuario">
         <div class="card-usuario">
-          <div class="card-encabezado" style="background-color: #7782c6">
-            <i
+          <div
+        class="card-encabezado"
+        v-bind:class="{
+          'card-encabezado-azul': alumno.alumno.estadoUsuario === true,
+          'card-encabezado-rojo': alumno.alumno.estadoUsuario === false 
+        }"      >
+                <i
               class="fas fa-info-circle info-icon"
               @click="mostrarInformacionUsuario(alumno)"
             ></i>
@@ -296,10 +301,18 @@ export default {
   margin-bottom: 20px;
 }
 
+/* En tu archivo de estilos CSS */
 .card-encabezado {
-  background-color: rgb(21 166 118) !important;
   height: 100px;
   position: relative;
+}
+
+.card-encabezado-azul {
+  background-color: #578E7E !important;
+}
+
+.card-encabezado-rojo {
+  background-color: #C54646 !important;
 }
 
 .info-icon {
@@ -427,13 +440,13 @@ export default {
 .card-footer {
   background-color: #f0f0f0 !important;
   display: flex;
+  flex-direction: column;
   justify-content: space-between; /* Distribuye los bloques equitativamente */
-  gap: 20px; /* Ajusta el espacio entre los bloques */
   padding: 15px 20px;
   width: 100%;
   align-items: end;
-    margin-bottom: 20px;
-    margin-top: 0;
+  margin-bottom: 20px;
+  margin-top: 0;
 }
 
 .card-charlasalumno {
@@ -449,6 +462,7 @@ export default {
   font-weight: 700;
   color: #333;
   text-align: center;
+  display: flex;
 }
 
 .stats-wrapper-charlasalumno {
@@ -480,24 +494,26 @@ export default {
 }
 
 .count-charlasalumno {
-  font-size: 0.6em;
-  font-weight: bold;
-  color: #333;
-  margin-bottom: 0;
-  margin-top: 0;
-  padding-left: 5px;
+    font-size: 0.9em;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 0;
+    margin-top: 0;
+    padding-left: 5px;
+    display: flex;
+    justify-content: start;
 }
 
 #totales-charlasalumno {
-  background-color: #e3b7e6;
+  background-color: #D9D0FF;
 }
 
 #propuestas-charlasalumno {
-  background-color: #afabf4 ;
+  background-color: #C9DCFF ;
 }
 
 #aceptadas-charlasalumno {
-  background-color: #48e8b3;
+  background-color: #87D0B1;
 }
 
 .user-mail {
@@ -508,9 +524,26 @@ export default {
 
 .card-stats {
   display: flex;
-  flex-direction: row;
-  align-items: center;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+    margin-left: 8px !important;
+    align-content: center;
+    flex-wrap: nowrap;
+    justify-content: center;
+    width: 100%;
+}
+
+.card-stats > * {
+  flex-shrink: 0;
+}
+
+.card-titulo {
+  display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-content: start;
+  width: 100%;
 }
 
 </style>
