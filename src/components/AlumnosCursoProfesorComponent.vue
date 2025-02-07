@@ -177,23 +177,35 @@ export default {
     },
 
     mostrarInformacionUsuario(alumno) {
-      Swal.fire({
-        title: "Información del Usuario",
-        html: `
-        <div style="text-align: left;">
-      <strong>Nombre:</strong> ${alumno.alumno.usuario}<br>
-      <strong>Curso:</strong> ${alumno.alumno.curso}<br>
-      <strong>Email:</strong> ${alumno.alumno.email}<br>
-      <strong>Charlas totales:</strong>
-       ${alumno.charlasTotales}<br> <!-- Aquí accedes a charlasTotales -->
-      <strong>Estado:</strong> ${
-        alumno.alumno.estadoUsuario ? "Activo" : "Inactivo"
-      } </div>
+  // Usamos la función Swal.fire con un botón dinámico que ejecuta un método de Vue
+  Swal.fire({
+    title: "Información del Usuario",
+    html: `
+      <div style="text-align: left;">
+        <strong>Nombre:</strong> ${alumno.alumno.usuario}<br>
+        <strong>Curso:</strong> ${alumno.alumno.curso}<br>
+        <strong>Email:</strong> ${alumno.alumno.email}<br>
+        <strong>Charlas totales:</strong> ${alumno.charlasTotales}<br>
+        <strong>Estado:</strong> ${alumno.alumno.estadoUsuario ? "Activo" : "Inactivo"}<br>
+        <button 
+          id="btn-activar" 
+          class="btn-activar" 
+          style="background-color: ${alumno.alumno.estadoUsuario ? '#C54646' : '#578E7E '}; border-radius: 15px; padding: 8px 15px; margin: 5px; cursor: pointer; transition: background-color 0.3s; flex: 1; color:white;border-bottom: 2px solid #494949 !important; margin-top: 14px; border: 0px;"
+        >
+          ${alumno.alumno.estadoUsuario ? "Desactivar" : "Activar"}
+        </button>
+      </div>
     `,
-        icon: "info",
-        confirmButtonText: "OK",
+    icon: "info",
+    confirmButtonText: "OK",
+    didOpen: () => {
+      const button = document.getElementById("btn-activar");
+      button.addEventListener("click", () => {
+        this.abrirAlerta(alumno.alumno);
       });
     },
+  });
+},
     async cargarAlumnos() {
       try {
         const idCurso = this.$route.query.idCurso;
@@ -375,6 +387,18 @@ export default {
   background-color: #40685c !important; 
   color: white;
   cursor: pointer;
+}
+
+.btn-activar.desactivar {
+  background-color: #ff4d4f !important; /* Rojo intenso */
+  color: white !important; /* Texto blanco */
+  border: none !important; /* Sin borde */
+  box-shadow: none !important; /* Sin sombra */
+}
+
+.btn-activar.activar {
+  background-color: #40685c !important; 
+  color: white;
 }
 
 .btn-activar:active {
