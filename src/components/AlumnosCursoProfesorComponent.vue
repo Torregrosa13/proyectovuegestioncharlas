@@ -6,7 +6,7 @@
       <!-- Ícono de retroceder -->
     </button>
 
-    <h2 class="mb-4 text-center" style="font-size: 42px; font-weight: 400px">
+    <h2 class="mb-4 text-center" style="font-size: 42px; font-weight: 400px;">
       Gestión de Alumnos
     </h2>
     <hr class="linea-separadora" />
@@ -30,45 +30,53 @@
     <div class="row row-cols-xl-3 row-cols-lg-2 row-cols-1 d-flex">
       <div class="col" v-for="alumno in alumnos" :key="alumno.alumno.idUsuario">
         <div class="card-usuario">
-          <div class="card-encabezado" style="background-color: #7782c6">
-            <i
+          <div
+        class="card-encabezado"
+        v-bind:class="{
+          'card-encabezado-azul': alumno.alumno.estadoUsuario === true,
+          'card-encabezado-rojo': alumno.alumno.estadoUsuario === false 
+        }"      >
+                <i
               class="fas fa-info-circle info-icon"
               @click="mostrarInformacionUsuario(alumno)"
             ></i>
           </div>
           <div class="card-cuerpo">
             <div class="profile-info">
-              <img :src="alumno.alumno.imagen" />
+              <img :src="alumno.alumno.imagen" @error="defaultImage"/>
               <div class="user-details">
                 <div class="titulo" style="font-weight: 600">
                   {{ alumno.alumno.usuario }}
                 </div>
                 <div class="user-curso subtitulo" style="font-size: 13px">
-                  {{ alumno.alumno.email }} 
-                  <span class="badge bg-info text-dark">
-                    {{alumno.charlasTotales}}
-                    </span>           
-                  <span class="badge bg-danger">
-                    {{alumno.charlasPropuestas}}
-                    </span>  
-                  <span class="badge bg-success">
-                    {{alumno.charlasAceptadas}}
-                    </span>                 
+                  <div class="user-mail">{{ alumno.alumno.email }} </div>   
                 </div>
               </div>
             </div>
-            <div class="btn-group">
-              <!-- Solo mostrar el botón si el curso está activo -->
-              <button
-                @click="abrirAlerta(alumno.alumno)"
-                v-text="alumno.alumno.estadoUsuario ? 'Desactivar' : 'Activar'"
-                :style="{
-                  backgroundColor: alumno.alumno.estadoUsuario
-                    ? '#ff4d4f'
-                    : '#4CAF50',
-                  color: 'white',
-                }"
-              ></button>
+          </div>
+          <div class="card-footer">
+            <div class="card-titulo">
+              <p class="charlasalumno-tittle"><strong>Charlas</strong></p>
+            </div>
+            <div class="card-stats">
+              <div id="totales-charlasalumno" class="stats-wrapper-charlasalumno">
+              <p class="heading-charlasalumno">Totales:</p>
+              <div class="bottom-wrapper-charlasalumno">
+                <p class="count-charlasalumno">{{ alumno.charlasTotales }}</p>
+              </div>
+            </div>
+            <div id="propuestas-charlasalumno" class="stats-wrapper-charlasalumno">
+              <p class="heading-charlasalumno">Propuestas:</p>
+              <div class="bottom-wrapper-charlasalumno">
+                <p class="count-charlasalumno">{{ alumno.charlasPropuestas }}</p>
+              </div>
+            </div>
+            <div id="aceptadas-charlasalumno" class="stats-wrapper-charlasalumno">
+              <p class="heading-charlasalumno">Aceptada:</p>
+              <div class="bottom-wrapper-charlasalumno">
+                <p class="count-charlasalumno">{{ alumno.charlasAceptadas }}</p>
+              </div>
+            </div>  
             </div>
           </div>
         </div>
@@ -122,6 +130,10 @@ export default {
           }
         });
       }
+    },
+
+    defaultImage(event) {
+      event.target.src = require('@/assets/perfil_prueba.png');
     },
 
     async cambiarEstadoAlumno(alumno, activar) {
@@ -279,6 +291,7 @@ export default {
 }
 
 .card-usuario {
+  background-color: #f0f0f0 !important;
   width: 100%;
   max-width: 480px;
   border-radius: 15px;
@@ -288,10 +301,18 @@ export default {
   margin-bottom: 20px;
 }
 
+/* En tu archivo de estilos CSS */
 .card-encabezado {
-  background-color: #ff7a00;
   height: 100px;
   position: relative;
+}
+
+.card-encabezado-azul {
+  background-color: #578E7E !important;
+}
+
+.card-encabezado-rojo {
+  background-color: #C54646 !important;
 }
 
 .info-icon {
@@ -304,12 +325,14 @@ export default {
 }
 
 .card-cuerpo {
-  background-color: #a3a3a3;
+  background-color: #f0f0f0 !important;
   padding: 20px;
   text-align: center;
   position: relative;
   margin-top: -30px;
   z-index: 1;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
 }
 
 .profile-info {
@@ -401,4 +424,126 @@ export default {
   border: none !important; /* Sin borde */
   box-shadow: none !important; /* Sin sombra */
 }
+
+.card-charlasalumno {
+  display: flex;
+  flex-direction: column; /* Asegura que los elementos se apilen verticalmente */
+  align-items: center !important;
+  justify-content: flex-start !important; /* Alinea los elementos al principio */
+  gap: 14px;
+  margin-top: 25px;
+  position: relative; /* Necesario para el pseudo-elemento */
+  width: 100%;
+  padding-top: 15px;
+}
+
+.card-footer {
+  background-color: #f0f0f0 !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Distribuye los bloques equitativamente */
+  padding: 15px 20px;
+  width: 100%;
+  align-items: end;
+  margin-bottom: 20px;
+  margin-top: 0;
+}
+
+.card-charlasalumno {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 0;
+}
+
+.charlasalumno-tittle {
+  font-size: 0.8em;
+  font-weight: 700;
+  color: #333;
+  text-align: center;
+  display: flex;
+}
+
+.stats-wrapper-charlasalumno {
+  display: flex;
+  flex-direction: row;
+  align-items: center; /* Centra los elementos dentro de cada bloque */
+  justify-content: center;
+  width: 120px;
+  height: 30px;
+  border-radius: 20px;
+  background-color: rgb(255, 255, 255);
+  padding: 5px 10px;
+  box-shadow: 2px 3px 6px rgba(21, 2, 3, 0.35);
+}
+
+.heading-charlasalumno {
+  font-size: 0.9em;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  text-align: center;
+  margin-bottom: 0;
+  margin-top: 0;
+}
+
+.bottom-wrapper-charlasalumno {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.count-charlasalumno {
+    font-size: 0.9em;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 0;
+    margin-top: 0;
+    padding-left: 5px;
+    display: flex;
+    justify-content: start;
+}
+
+#totales-charlasalumno {
+  background-color: #D9D0FF;
+}
+
+#propuestas-charlasalumno {
+  background-color: #C9DCFF ;
+}
+
+#aceptadas-charlasalumno {
+  background-color: #87D0B1;
+}
+
+.user-mail {
+  font-size: 0.7;
+  font-weight: 400;
+  color: #6b6b6b;
+}
+
+.card-stats {
+  display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+    margin-left: 8px !important;
+    align-content: center;
+    flex-wrap: nowrap;
+    justify-content: center;
+    width: 100%;
+}
+
+.card-stats > * {
+  flex-shrink: 0;
+}
+
+.card-titulo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: start;
+  width: 100%;
+}
+
 </style>
